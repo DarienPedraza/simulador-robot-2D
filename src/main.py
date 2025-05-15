@@ -10,7 +10,7 @@ pygame.display.set_caption("Simulador de Robot 2D")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 18)
 
-robot = Robot(WIDTH//2, HEIGHT//2)
+robot = Robot(100, 100)
 obstacle = pygame.Rect(300, 200, 100, 100)
 reset_button = pygame.Rect(650, 20, 120, 40)
 
@@ -48,13 +48,13 @@ while running:
     robot_rect = pygame.Rect(robot.x, robot.y, 50, 50)
     for obst in lista_obstaculos:
         if robot_rect.colliderect(obst):
-            if teclas[pygame.K_LEFT]:
+            if keys[pygame.K_LEFT]:
                 robot.x += 150 * dt
-            if teclas[pygame.K_RIGHT]:
+            if keys[pygame.K_RIGHT]:
                 robot.x -= 150 * dt
-            if teclas[pygame.K_UP]:
+            if keys[pygame.K_UP]:
                 robot.y += 150 * dt
-            if teclas[pygame.K_DOWN]:
+            if keys[pygame.K_DOWN]:
                 robot.y -= 150 * dt
 
     # Dibujo
@@ -65,7 +65,7 @@ while running:
 
      ## Dibujo de nuevos obstáculos
     for obst in lista_obstaculos:
-        pygame.draw.rect(pantalla, (255, 0, 0), obst)
+        pygame.draw.rect(screen, (255, 0, 0), obst)
 
     # Mostrar datos
     info = f"Pos: ({int(robot.x)}, {int(robot.y)}) | Ángulo: {int(robot.angle)} | Velocidad: {round(robot.speed*60,1)} px/s"
@@ -77,7 +77,7 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if reset_button.collidepoint(event.pos):
-                robot.reset(WIDTH//2, HEIGHT//2)
+                robot = Robot(100, 100)
 
     pygame.display.flip()
 
