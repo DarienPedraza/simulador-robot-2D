@@ -57,6 +57,61 @@ while running:
             if keys[pygame.K_DOWN]:
                 robot.y -= 150 * dt
 
+    # Obstáculos
+floor = pygame.Rect(0, 550, 800, 50)
+obstacles = [
+    floor,
+    pygame.Rect(200, 500, 100, 20),
+    pygame.Rect(400, 450, 100, 20),
+    pygame.Rect(600, 400, 100, 20),
+]
+
+running = True
+while running:
+    dt = clock.tick(60) / 1000
+    screen.fill((50, 50, 70))
+
+    keys = pygame.key.get_pressed()
+
+    robot.vx = 0
+    if robot.alive:
+        if keys[pygame.K_a]:
+            robot.vx = -200
+        if keys[pygame.K_d]:
+            robot.vx = 200
+        if keys[pygame.K_w]:
+            robot.jump()
+
+   
+    robot.vy += 800 * dt
+
+    
+    robot.x += robot.vx * dt
+    robot.y += robot.vy * dt
+
+    robot_rect = pygame.Rect(robot.x, robot.y, robot.width, robot.height)
+    robot.on_ground = False
+
+    for obs in obstacles:
+        if robot_rect.colliderect(obs):
+            if robot.vy > 0 and robot_rect.bottom <= obs.bottom:
+                robot.y = obs.top - robot.height
+                robot.vy = 0
+                robot.on_ground = True
+                robot_rect.topleft = (robot.x, robot.y)
+
+    # Detectar si cae fuera de la pantalla
+    if robot.y > HEIGHT:
+        robot.alive = False
+
+    
+    # Dibuja obstáculos
+    for obs in obstacles:
+        pygame.draw.rect(screen, (100, 100, 100), obs)
+
+    # Dibuja robot
+    robot.draw(screen)
+
     # Dibujo
     robot.draw(screen)
     pygame.draw.rect(screen, (255, 0, 0), obstacle)
