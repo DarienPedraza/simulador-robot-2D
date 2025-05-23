@@ -19,3 +19,16 @@ robot_img, obstacle_img, collectible_img, boton_reset_img, robot_mask, obstacle_
 
 # Cargar icono y fondo
 fondo = pygame.image.load("imagenes/space.png").convert()
+# ===== CONSTANTES =====
+# Colores
+BLANCO = (255, 255, 255)
+ROJO = (255, 0, 0)
+AZUL = (70, 70, 200)
+VERDE = (0, 255, 0)
+AMARILLO = (255, 255, 0)
+NEGRO = (0, 0, 0)
+
+# Fuente y reloj
+font = pygame.font.SysFont("Arial", 18)
+clock = pygame.time.Clock()
+FPS = 60
