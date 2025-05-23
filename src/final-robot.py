@@ -11,3 +11,7 @@ class Robot:
         self.image = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
         self.image.fill((0, 255, 0))  # Verde
 
+
+def get_rect(self):
+        # Devuelve el rectángulo de colisión del robot
+        return pygame.Rect(self.x - self.size / 2, self.y - self.size / 2, self.size, self.size)
