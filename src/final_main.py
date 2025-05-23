@@ -2,3 +2,20 @@
 import pygame
 import sys
 import random
+
+# ===== INICIALIZACIÓN =====
+pygame.init()
+
+# ===== CONFIGURACIÓN DE PANTALLA =====
+# Detectar resolución de pantalla
+info = pygame.display.Info()
+SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
+screen = pygame.display.set_mode((SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100), pygame.RESIZABLE)
+pygame.display.set_caption("Robot 2D")
+
+# ===== CARGAR RECURSOS =====
+# Cargar imágenes después de crear la ventana
+robot_img, obstacle_img, collectible_img, boton_reset_img, robot_mask, obstacle_mask, collectible_mask = cargar_imagenes()
+
+# Cargar icono y fondo
+fondo = pygame.image.load("imagenes/space.png").convert()
