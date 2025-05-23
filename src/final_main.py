@@ -1,7 +1,9 @@
 # ===== IMPORTS =====
 import pygame
+from robot import Robot
 import sys
 import random
+from graphics import cargar_imagenes
 
 # ===== INICIALIZACIÓN =====
 pygame.init()
@@ -19,6 +21,7 @@ robot_img, obstacle_img, collectible_img, boton_reset_img, robot_mask, obstacle_
 
 # Cargar icono y fondo
 fondo = pygame.image.load("imagenes/space.png").convert()
+
 # ===== CONSTANTES =====
 # Colores
 BLANCO = (255, 255, 255)
@@ -32,6 +35,9 @@ NEGRO = (0, 0, 0)
 font = pygame.font.SysFont("Arial", 18)
 clock = pygame.time.Clock()
 FPS = 60
+
+# Cantidad de collectibles
+NUM_COLLECTIBLES = 10
 
 # ===== OBJETOS DEL JUEGO =====
 # Obstáculos (lista)
