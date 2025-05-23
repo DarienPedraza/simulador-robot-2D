@@ -32,3 +32,93 @@ NEGRO = (0, 0, 0)
 font = pygame.font.SysFont("Arial", 18)
 clock = pygame.time.Clock()
 FPS = 60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ===== CONTROLES =====
+ # Controles por teclado
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        robot.speed = 150 * dt
+    elif keys[pygame.K_s]:
+        robot.speed = -150 * dt
+    else:
+        robot.speed = 0
+
+    if keys[pygame.K_a]:
+        robot.angle += 180 * dt
+    if keys[pygame.K_d]:
+        robot.angle -= 180 * dt
+
+    # Movimiento por botón mantenido
+    if mouse_held and button_pressed:
+        if button_pressed == "up":
+            robot.speed = 150 * dt
+        elif button_pressed == "down":
+            robot.speed = -150 * dt
+        elif button_pressed == "left":
+            robot.angle += 180 * dt
+        elif button_pressed == "right":
+            robot.angle -= 180 * dt
