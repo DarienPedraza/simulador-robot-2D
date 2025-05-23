@@ -59,6 +59,14 @@ obstacles = [
     pygame.Rect(1600, 700, 100, 100),
 ]
 
+# ===== FUNCIONES AUXILIARES =====
+# Función para crear puntos sin que queden dentro de obstáculos
+def generar_collectible_valido():
+    while True:
+        c = pygame.Rect(random.randint(100, SCREEN_WIDTH - 100), random.randint(100, SCREEN_HEIGHT - 100), 30, 30)
+        if not any(c.colliderect(ob) for ob in obstacles):
+            return c
+            
 # ===== INICIALIZACIÓN DE OBJETOS =====
 # Inicializar robot y collectibles
 robot = Robot(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
