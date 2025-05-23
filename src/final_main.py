@@ -32,7 +32,22 @@ NEGRO = (0, 0, 0)
 font = pygame.font.SysFont("Arial", 18)
 clock = pygame.time.Clock()
 FPS = 60
+# ===== INICIALIZACIÓN DE OBJETOS =====
+# Inicializar robot y collectibles
+robot = Robot(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+collectibles = [generar_collectible_valido() for _ in range(NUM_COLLECTIBLES)]
 
+# ===== INTERFAZ DE USUARIO =====
+# Botones
+reset_button = pygame.Rect(SCREEN_WIDTH - 150, 20, 120, 40)
+btn_up = pygame.Rect(80, SCREEN_HEIGHT - 120, 60, 40)
+btn_down = pygame.Rect(80, SCREEN_HEIGHT - 60, 60, 40)
+btn_left = pygame.Rect(20, SCREEN_HEIGHT - 90, 50, 40)
+btn_right = pygame.Rect(150, SCREEN_HEIGHT - 90, 50, 40)
+
+# Estados de botones
+mouse_held = False
+button_pressed = None
 
 
 
@@ -122,3 +137,20 @@ FPS = 60
             robot.angle += 180 * dt
         elif button_pressed == "right":
             robot.angle -= 180 * dt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ # Info en pantalla
+    info_text = f"Pos: ({int(robot.x)}, {int(robot.y)}) | Ángulo: {int(robot.angle)}° | Puntos: {robot.score}"
+    screen.blit(font.render(info_text, True, BLANCO), (20, 20))
