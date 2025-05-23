@@ -125,67 +125,6 @@ elif btn_up.collidepoint(event.pos):
             button_pressed = None
             robot.speed = 0  # Detener movimiento al soltar
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # ===== CONTROLES =====
  # Controles por teclado
     keys = pygame.key.get_pressed()
