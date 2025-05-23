@@ -12,6 +12,22 @@ class Robot:
         self.image.fill((0, 255, 0))  # Verde
 
 
+
+    def move(self):
+        # Mueve el robot en la dirección actual, si tiene energía
+        if self.energy > 0:
+            rad = math.radians(self.angle)
+            self.x += self.speed * math.cos(rad)
+            self.y -= self.speed * math.sin(rad)
+            self.energy = max(0, self.energy - abs(self.speed) * 0.1)  # Consumo de energía
+
+    def draw(self, screen):
+        # Rota y dibuja el robot en pantalla
+        rotated = pygame.transform.rotate(self.image, self.angle)
+        rect = rotated.get_rect(center=(self.x, self.y))
+        screen.blit(rotated, rect)
+
+
 def get_rect(self):
         # Devuelve el rectángulo de colisión del robot
         return pygame.Rect(self.x - self.size / 2, self.y - self.size / 2, self.size, self.size)
