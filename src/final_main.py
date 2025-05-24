@@ -99,46 +99,6 @@ while running:
         screen.blit(fondo, (x_relativa, 0))
     X -= 1
 
-# ===== LÓGICA DEL JUEGO =====
-    # Movimiento y colisión
-    prev_pos = (robot.x, robot.y)
-    robot.move()
-    for ob in obstacles:
-        # Obtener posiciones relativas
-        offset_x = ob.x - robot.x
-        offset_y = ob.y - robot.y
-    
-        # Verificar colisión pixel-perfect
-        if robot_mask.overlap(obstacle_mask, (offset_x, offset_y)):
-            robot.x, robot.y = prev_pos
-            break
-
-    # Colisión con recolectables
-    for c in collectibles[:]:
-        if robot.get_rect().colliderect(c):
-            robot.score += 1
-            robot.energy = min(100, robot.energy + 20)
-            collectibles.remove(c)
-            
-            # Al consumir uno, generar dos nuevos inmediatamente
-            for _ in range(1):
-                collectibles.append(pygame.Rect(random.randint(100, SCREEN_WIDTH - 100), random.randint(100, SCREEN_HEIGHT - 100), 30, 30))
-
-
-elif btn_up.collidepoint(event.pos):
-                button_pressed = "up"
-            elif btn_down.collidepoint(event.pos):
-                button_pressed = "down"
-            elif btn_left.collidepoint(event.pos):
-                button_pressed = "left"
-            elif btn_right.collidepoint(event.pos):
-                button_pressed = "right"
-
-        elif event.type == pygame.MOUSEBUTTONUP:
-            mouse_held = False
-            button_pressed = None
-            robot.speed = 0  # Detener movimiento al soltar
-
 # ===== CONTROLES =====
  # Controles por teclado
     keys = pygame.key.get_pressed()
@@ -164,20 +124,91 @@ elif btn_up.collidepoint(event.pos):
             robot.angle += 180 * dt
         elif button_pressed == "right":
             robot.angle -= 180 * dt
+    
+# ===== LÓGICA DEL JUEGO =====
+    # Movimiento y colisión
+    prev_pos = (robot.x, robot.y)
+    robot.move()
+    for ob in obstacles:
+        # Obtener posiciones relativas
+        offset_x = ob.x - robot.x
+        offset_y = ob.y - robot.y
+    
+        # Verificar colisión pixel-perfect
+        if robot_mask.overlap(obstacle_mask, (offset_x, offset_y)):
+            robot.x, robot.y = prev_pos
+            break
 
+    # Colisión con recolectables
+    for c in collectibles[:]:
+        if robot.get_rect().colliderect(c):
+            robot.score += 1
+            robot.energy = min(100, robot.energy + 20)
+            collectibles.remove(c)
+            
+            # Al consumir uno, generar dos nuevos inmediatamente
+            for _ in range(1):
+                collectibles.append(pygame.Rect(random.randint(100, SCREEN_WIDTH - 100), random.randint(100, SCREEN_HEIGHT - 100), 30, 30))
 
+    # ===== RENDERIZADO =====
+    # Dibujar elementos
+    screen.blit(robot_img, (robot.x, robot.y))
 
+    # Dibujar obstáculos
+    for ob in obstacles:
+        screen.blit(obstacle_img, (ob.x, ob.y))
 
+    # Recolectables
+    for c in collectibles:
+        screen.blit(collectible_img, (c.x, c.y))
 
+    # Botón reiniciar
+    screen.blit(boton_reset_img, (reset_button.x, reset_button.y))
 
+    # Botones de GUI
+    pygame.draw.rect(screen, BLANCO, btn_up)
+    pygame.draw.rect(screen, BLANCO, btn_down)
+    pygame.draw.rect(screen, BLANCO, btn_left)
+    pygame.draw.rect(screen, BLANCO, btn_right)
 
-
-
-
-
-
-
+    screen.blit(font.render("↑", True, NEGRO), (btn_up.x + 22, btn_up.y + 8))
+    screen.blit(font.render("↓", True, NEGRO), (btn_down.x + 22, btn_down.y + 8))
+    screen.blit(font.render("←", True, NEGRO), (btn_left.x + 18, btn_left.y + 8))
+    screen.blit(font.render("→", True, NEGRO), (btn_right.x + 18, btn_right.y + 8))
 
  # Info en pantalla
     info_text = f"Pos: ({int(robot.x)}, {int(robot.y)}) | Ángulo: {int(robot.angle)}° | Puntos: {robot.score}"
     screen.blit(font.render(info_text, True, BLANCO), (20, 20))
+
+    # Energía
+    pygame.draw.rect(screen, NEGRO, (20, 50, 200, 20))
+    pygame.draw.rect(screen, VERDE, (20, 50, 2 * robot.energy, 20))
+    screen.blit(font.render(f"Energía: {robot.energy}%", True, BLANCO), (230, 50))
+
+    # ===== MANEJO DE EVENTOS =====
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
+            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_held = True
+            if reset_button.collidepoint(event.pos):
+                robot.reset(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+                collectibles = [generar_collectible_valido() for _ in range(NUM_COLLECTIBLES)]
+
+            elif btn_up.collidepoint(event.pos):
+                button_pressed = "up"
+            elif btn_down.collidepoint(event.pos):
+                button_pressed = "down"
+            elif btn_left.collidepoint(event.pos):
+                button_pressed = "left"
+            elif btn_right.collidepoint(event.pos):
+                button_pressed = "right"
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            mouse_held = False
+            button_pressed = None
+            robot.speed = 0  # Detener movimiento al soltar
