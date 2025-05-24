@@ -31,3 +31,11 @@ class Robot:
 def get_rect(self):
         # Devuelve el rectángulo de colisión del robot
         return pygame.Rect(self.x - self.size / 2, self.y - self.size / 2, self.size, self.size)
+
+def reset(self, x, y):
+        # Reinicia la posición, ángulo, velocidad, energía y puntos
+        self.x, self.y = x, y
+        self.angle = 0
+        self.speed = 0
+        self.energy = 100
+        self.score = 0
