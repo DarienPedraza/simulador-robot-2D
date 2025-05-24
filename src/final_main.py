@@ -84,6 +84,20 @@ btn_right = pygame.Rect(150, SCREEN_HEIGHT - 90, 50, 40)
 mouse_held = False
 button_pressed = None
 
+# ===== BUCLE PRINCIPAL =====
+# Fondo animado
+X = 0
+running = True
+while running:
+    dt = clock.tick(FPS) / 1000  # Delta time
+
+    # ===== MANEJO DE FONDO =====
+    # Fondo en movimiento
+    x_relativa = X % fondo.get_rect().width
+    screen.blit(fondo, (x_relativa - fondo.get_rect().width, 0))
+    if x_relativa < SCREEN_WIDTH:
+        screen.blit(fondo, (x_relativa, 0))
+    X -= 1
 
 # ===== LÓGICA DEL JUEGO =====
     # Movimiento y colisión
