@@ -212,3 +212,17 @@ while running:
             mouse_held = False
             button_pressed = None
             robot.speed = 0  # Detener movimiento al soltar
+
+        elif event.type == pygame.VIDEORESIZE:
+            SCREEN_WIDTH, SCREEN_HEIGHT = event.w, event.h
+            screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
+            reset_button = pygame.Rect(SCREEN_WIDTH - 150, 20, 120, 40)
+            btn_up = pygame.Rect(80, SCREEN_HEIGHT - 120, 60, 40)
+            btn_down = pygame.Rect(80, SCREEN_HEIGHT - 60, 60, 40)
+            btn_left = pygame.Rect(20, SCREEN_HEIGHT - 90, 50, 40)
+            btn_right = pygame.Rect(150, SCREEN_HEIGHT - 90, 50, 40)
+
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
