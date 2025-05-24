@@ -11,7 +11,8 @@ class Robot:
         self.image = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
         self.image.fill((0, 255, 0))  # Verde
 
-
+        self.energy = 100  # Energía del robot (0 a 100)
+        self.score = 0     # Puntos por recolectar elementos
 
     def move(self):
         # Mueve el robot en la dirección actual, si tiene energía
@@ -26,7 +27,6 @@ class Robot:
         rotated = pygame.transform.rotate(self.image, self.angle)
         rect = rotated.get_rect(center=(self.x, self.y))
         screen.blit(rotated, rect)
-
 
 def get_rect(self):
         # Devuelve el rectángulo de colisión del robot
